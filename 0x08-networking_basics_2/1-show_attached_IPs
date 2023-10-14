@@ -1,4 +1,13 @@
-#!/usr/bin/env bash
-# Displays all acive IPv4 addresses on the machine.
+#!/bin/bash
 
-ifconfig | grep -Eo "inet (addr:)?([0-9]*\.){3}[0-9]*" | cut -b 11-
+# Get all IP addresses
+ip_addresses=$(hostname -I)
+
+# Split the IP addresses by space
+ip_addresses=(${ip_addresses// / })
+
+# Print each IP address line by line
+echo "LIST OF IP ADDRESSES"
+for ip in "${ip_addresses[@]}"; do
+    printf "%s\n" "$ip"
+done
