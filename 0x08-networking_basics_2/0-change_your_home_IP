@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
-#copy of hostfile
-#localhost to 127.0.0.2
-#facebook.com to 8.8.8.8
 
+# This Bash script changes the resolution of localhost to 127.0.0.2 and facebook.com to 8.8.8.8 in /etc/hosts
 
-cp /etc/hosts ~/hosts.new
-echo "127.0.0.2 localhost" > ~/hosts.new
-echo "8.8.8.8 facebook.com" >> ~/hosts.new
-cp -f ~/hosts.new /etc/hosts
+# Check if script is run with sudo privileges
+if [ "$(id -u)" != "0" ]; then
+    echo "This script must be run with sudo. Please use sudo ./0-change_your_home_IP"
+    exit 1
+fi
+
+# Change the resolution of localhost and facebook.com in /etc/hosts
+sed -i 's/^127.0.0.1[[:space:]]localhost$/127.0.0.2 localhost/' /etc/hosts
+sed -i 's/^.*[[:space:]]facebook.com$/8.8.8.8 facebook.com/' /etc/hosts
+
+# Print success message
+echo "Hosts file updated. localhost now resolves to 127.0.0.2, and facebook.com resolves to 8.8.8.8."
