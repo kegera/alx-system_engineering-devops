@@ -1,13 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#display ip addresses
 
-# Get all IP addresses
-ip_addresses=$(hostname -I)
-
-# Split the IP addresses by space
-ip_addresses=(${ip_addresses// / })
-
-# Print each IP address line by line
-echo "LIST OF IP ADDRESSES"
-for ip in "${ip_addresses[@]}"; do
-    printf "%s\n" "$ip"
-done
+ifconfig | grep 'inet' | awk '{print $2}'
