@@ -5,7 +5,7 @@ print_info () {
     local domain="$1"
     local subdomain="$2"
     local script
-    script=$(dig "$subdomain"."$domain" | grep -A1 'ANSWER SECTION:' | awk '{print $NF}')
+    script=$(dig "$subdomain"."$domain" | awk '/ANSWER SECTION/ {getline; print $NF}')
     echo "The subdomain $subdomain is a A record and points to $script"
 }
 
